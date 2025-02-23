@@ -1,0 +1,16 @@
+{
+  "name": "bind-script",
+  "private": true,
+  "version": "0.0.0",
+  "homepage": "https://github.com/bolanxian/BindScript",
+  "author": "https://github.com/bolanxian/",
+  "type": "module",
+  "main": "?",
+  "types": "src/env.d.ts",
+  "scripts": {
+    "pack": "npm pack"
+  },
+  "peerDependencies": {
+    "vite": ">= 5.0.0"
+  }
+}
