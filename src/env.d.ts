@@ -80,10 +80,12 @@ declare module 'bind:Number' {
   export = T
 }
 declare module 'bind:String' {
-  type Replace = (...args: [string | RegExp, string | ((sub: string, ...args: any[]) => string)]) => string
+  type Replacer = (sub: string, ...args: any[]) => string
   const T: typeof String & import('bind:core').Binder<import('bind:utils').Override<string, {
-    replace: Replace
-    replaceAll: Replace
+    replace(searcher: string, replacer: string | Replacer): string
+    replaceAll(searcher: string, replacer: string | Replacer): string
+    search(searcher: string): number
+    split(separator: string, limit?: number): string[]
   }>, string>
   export = T
 }
