@@ -31,8 +31,8 @@ declare module 'bind:utils' {
   export const $string: Binder<string>
   export const $array: Binder<any[]>
 
-  export const hasOwn = Object.hasOwn
-  export type Get<T, K extends PropertyKey> = T extends { [_ in K]: infer V } ? V : undefined
+  export const { hasOwn } = Object
+  export type Get<T extends {}, K extends PropertyKey> = K extends keyof T ? T[K] : never
   export const getOwn: <T extends {}, K extends PropertyKey>(o: T, k: K) => Get<T, K> | undefined
   export const getAsync: <
     T extends { [_ in K]: any }, K extends PropertyKey
@@ -40,11 +40,11 @@ declare module 'bind:utils' {
   export const getTypeString: (o: any) => string
   export const isPlainObject: (o: any) => boolean
 
-  export const now: Performance['now']
-  export const $then: <T, R1, R2>(
+  export const { now }: Performance
+  export const $then: <T, R1 = T, R2 = never>(
     thisArg: Promise<T>,
-    onFulfilled?: ((value: T) => R1 | Promise<R1>) | null | undefined,
-    onRejected?: ((reason: any) => R2 | Promise<R2>) | null | undefined
+    onFulfilled?: ((value: T) => R1 | PromiseLike<R1>) | null,
+    onRejected?: ((reason: any) => R2 | PromiseLike<R2>) | null
   ) => Promise<R1 | R2>
   export const encodeText: TextEncoder['encode']
   export const decodeText: TextDecoder['decode']
@@ -62,10 +62,11 @@ declare module 'bind:utils' {
   }>, RegExp>
 
   type EventListenerThis<T extends EventTarget | null> = T extends null ? typeof globalThis : T
+  type EventListenerEvent<T extends EventTarget | null, Type extends string>
+    = NonNullable<EventListenerThis<T>[`on${Type}`]> extends (e: infer E) => any ? E : Event
   type EventListener<T extends EventTarget | null, Type extends string>
-    = NonNullable<EventListenerThis<T>[`on${Type}`]> extends (e: infer E) => any
-    ? (this: EventListenerThis<T>, e: E) => any
-    : (this: EventListenerThis<T>, e: Event) => any
+    = (this: EventListenerThis<T>, e: EventListenerEvent<T, Type>) => any
+
   export const on: <T extends EventTarget | null, Type extends string>(
     thisArg: T, type: Type, callback: EventListener<T, Type>,
     options?: AddEventListenerOptions | boolean
