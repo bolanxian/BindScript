@@ -5,6 +5,9 @@ export const $number = /*@__PURE__*/createBinder(Number.prototype)
 export const $string = /*@__PURE__*/createBinder(String.prototype)
 export const $array = /*@__PURE__*/createBinder(Array.prototype)
 
+export const assert = null
+export const unreachable = null
+
 const ObjectProto = Object.prototype
 export const hasOwn = Object.hasOwn ?? /*@__PURE__*/bindCall(ObjectProto.hasOwnProperty)
 export const getOwn = (o, k) => hasOwn(o, k) ? o[k] : void 0

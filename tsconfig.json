@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
     "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2022", "DOM"],
-    "skipLibCheck": true,
+    "module": "preserve",
 
-    /* Linting */
-    "strict": true
+    "strict": true,
+    "skipLibCheck": false
   },
   "include": ["src/env.d.ts"]
 }
