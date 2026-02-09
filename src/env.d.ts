@@ -119,9 +119,7 @@ declare module 'bind:String' {
   export = T
 }
 declare module 'bind:Array' {
-  const T: typeof Array & import('bind:core').Binder<Omit<any[], 'with'>, any[]> & {
-    $with<T>(thisArg: T[], index: number, value: T): T[]
-  }
+  const T: typeof Array & import('bind:core').Binder<any[]>
   export = T
 }
 declare module 'bind:Object' {
